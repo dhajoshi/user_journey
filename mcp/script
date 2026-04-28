@@ -1,0 +1,6 @@
+bash
+
+mkdir -p /home/claude/multigitter-agent/{tools,prompts,.vscode} && echo "done"
+Output
+
+done
