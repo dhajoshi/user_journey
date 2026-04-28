@@ -1,0 +1,15 @@
+{
+  "servers": {
+    "multigitter-agent": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/server.py"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${env:GITHUB_TOKEN}",
+        "MULTIGITTER_BIN": "${env:MULTIGITTER_BIN}"
+      }
+    }
+  }
+}
