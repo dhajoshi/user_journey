@@ -1,0 +1,87 @@
+{
+  "name": "multigit-agent",
+  "displayName": "MultiGit Agent for Copilot",
+  "description": "AI agents for multi-repo operations and PR review via GitHub Copilot Chat",
+  "version": "1.0.0",
+  "engines": { "vscode": "^1.90.0" },
+  "categories": ["AI", "SCM Providers"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "multigit.runner",
+        "fullName": "MultiGit Runner",
+        "name": "multigit",
+        "description": "Run scripts across multiple repos using multi-gitter. Safe, previewed, subset-first.",
+        "isSticky": true,
+        "commands": [
+          { "name": "run",    "description": "Generate and run a script across repos" },
+          { "name": "commit", "description": "Commit changes across repos" },
+          { "name": "pr",     "description": "Open PRs across repos" },
+          { "name": "status", "description": "Check multi-gitter status / last run" }
+        ]
+      },
+      {
+        "id": "multigit.reviewer",
+        "fullName": "PR Reviewer",
+        "name": "prreview",
+        "description": "Review, approve, reject, or merge PRs. Previews diffs and blocks harmful changes.",
+        "isSticky": true,
+        "commands": [
+          { "name": "review", "description": "Review a PR or all open PRs" },
+          { "name": "merge",  "description": "Merge approved PRs (with preview)" },
+          { "name": "close",  "description": "Close/reject PRs" }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "MultiGit Agent",
+      "properties": {
+        "multigitAgent.githubToken": {
+          "type": "string",
+          "description": "GitHub PAT (or leave blank to use gh CLI auth)",
+          "default": ""
+        },
+        "multigitAgent.defaultOrg": {
+          "type": "string",
+          "description": "Default GitHub org/user for repo searches",
+          "default": ""
+        },
+        "multigitAgent.subsetSize": {
+          "type": "number",
+          "description": "Number of repos in the safety preview subset",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 10
+        },
+        "multigitAgent.multigitterPath": {
+          "type": "string",
+          "description": "Path to multi-gitter binary",
+          "default": "multi-gitter"
+        },
+        "multigitAgent.dryRunByDefault": {
+          "type": "boolean",
+          "description": "Always dry-run first, even for subset",
+          "default": true
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.0",
+    "@octokit/plugin-throttling": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.0",
+    "@vscode/vsce": "^3.0.0"
+  }
+}
